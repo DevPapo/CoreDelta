@@ -7,12 +7,6 @@ description: Skywars plugin for PocketMine-MP API 5
 load: POSTWORLD
 
 commands:
-  skywars:
-    description: "Main Skywars commands"
-    usage: "/skywars <subcommand>"
-    aliases: ['sw']
-    permission: coredelta.command.skywars
-
   swcreate:
     description: "Crear una nueva arena"
     usage: "/swcreate <nombre>"
@@ -59,8 +53,6 @@ commands:
     permission: coredelta.command.setup
 
 permissions:
-  coredelta.command.skywars:
-    default: op
   coredelta.command.create:
     default: op
   coredelta.command.delete:
@@ -73,13 +65,9 @@ permissions:
     default: true
   coredelta.command.top:
     default: true
-  coredelta.admin.setup:
+  coredelta.command.list:
+    default: true
+  coredelta.command.tutorial:
+    default: true
+  coredelta.command.setup:
     default: op
-  coredelta.admin.manage:
-    default: op
-  coredelta.player.join:
-    default: true
-  coredelta.player.leave:
-    default: true
-  coredelta.player.stats:
-    default: true
