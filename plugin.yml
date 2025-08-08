@@ -1,0 +1,53 @@
+name: CoreDelta
+main: CoreDelta\CoreDelta
+api: 5.0.0
+version: 1.0.0
+author: DevPapo
+description: Skywars plugin for PocketMine-MP API 5
+load: POSTWORLD
+
+commands:
+  skywars:
+    description: "Main Skywars commands"
+    usage: "/skywars <subcommand>"
+    permission: coredelta.command.skywars
+  sw:
+    description: "Alias for /skywars"
+    usage: "/sw <subcommand>"
+    permission: coredelta.command.skywars
+
+permissions:
+  coredelta.*:
+    default: op
+    children:
+      coredelta.command.*:
+        default: op
+      coredelta.admin.*:
+        default: op
+      coredelta.player.*:
+        default: true
+
+  coredelta.command.skywars:
+    default: op
+  coredelta.command.create:
+    default: op
+  coredelta.command.delete:
+    default: op
+  coredelta.command.join:
+    default: true
+  coredelta.command.leave:
+    default: true
+  coredelta.command.stats:
+    default: true
+  coredelta.command.top:
+    default: true
+  coredelta.admin.setup:
+    default: op
+  coredelta.admin.manage:
+    default: op
+  coredelta.player.join:
+    default: true
+  coredelta.player.leave:
+    default: true
+  coredelta.player.stats:
+    default: true

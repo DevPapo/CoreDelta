@@ -1,0 +1,34 @@
+name: "Sample"
+world: "skywars_sample"
+min_players: 2
+max_players: 8
+spawn_points:
+  - x: 100
+    y: 65
+    z: 100
+  - x: 110
+    y: 65
+    z: 100
+  - x: 100
+    y: 65
+    z: 110
+  - x: 110
+    y: 65
+    z: 110
+  - x: 105
+    y: 65
+    z: 105
+  - x: 95
+    y: 65
+    z: 105
+  - x: 105
+    y: 65
+    z: 95
+  - x: 95
+    y: 65
+    z: 95
+center_chest:
+  x: 105
+  y: 65
+  z: 105
+enabled: true

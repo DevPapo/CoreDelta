@@ -1,0 +1,78 @@
+# CoreDelta Skywars Configuration
+
+# MySQL Database Configuration
+mysql:
+  host: "localhost"
+  port: 3306
+  database: "coredelta"
+  username: "root"
+  password: ""
+  table-prefix: "cd_"
+
+# Game Settings
+game:
+  max-players: 8
+  min-players: 2
+  countdown-time: 30
+  game-time: 600
+  end-time: 10
+  grace-period: 60
+
+# Team Settings
+teams:
+  enabled: false
+  max-teams: 4
+  players-per-team: 2
+
+# Kit Settings
+kits:
+  enabled: true
+  default-kit: "default"
+  
+# Chest Settings
+chests:
+  refill-time: 300
+  tier1:
+    - "iron_sword"
+    - "bow"
+    - "arrow:16"
+    - "golden_apple:2"
+  tier2:
+    - "diamond_sword"
+    - "bow"
+    - "arrow:32"
+    - "golden_apple:4"
+    - "ender_pearl:2"
+
+# Scoreboard Settings
+scoreboard:
+  enabled: true
+  title: "§l§eSKYWARS"
+  lines:
+    - "§7Map: §a{map}"
+    - "§7Players: §a{players}/{max_players}"
+    - "§7Kills: §a{kills}"
+    - "§7Time: §a{time}"
+    - ""
+    - "§ewww.server.com"
+
+# Bossbar Settings
+bossbar:
+  enabled: true
+  title: "§l§eSKYWARS"
+  color: "yellow"
+
+# Points System
+points:
+  kill: 10
+  win: 50
+  participation: 5
+
+# Messages
+messages:
+  prefix: "§l§e[§6SkyWars§e]§r"
+  join: "{prefix} §a{player} joined the game!"
+  leave: "{prefix} §c{player} left the game!"
+  start: "{prefix} §aGame starting!"
+  win: "{prefix} §6{player} won the game!"
+  kill: "{prefix} §a{killer} killed {victim}!"
