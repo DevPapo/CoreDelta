@@ -35,27 +35,28 @@ class CoreDelta extends PluginBase {
     public function onEnable(): void {
         $this->saveDefaultConfig();
 
-        // Validar configuración MySQL antes de inicializar DatabaseManager
-        $mysqlConfig = $this->getConfig()->get("mysql");
-        if (!is_array($mysqlConfig)) {
-            $this->getLogger()->error("No se encontró la configuración 'mysql' en config.yml o está mal formada. El plugin no se habilitará.");
-            $this->getServer()->getPluginManager()->disablePlugin($this);
-            return;
-        }
-        
-        // Initialize managers
+        // Inicializa managers
         $this->databaseManager = new DatabaseManager($this);
         $this->arenaManager = new ArenaManager($this);
         $this->gameManager = new GameManager($this);
         $this->kitManager = new KitManager($this);
         $this->scoreboardManager = new ScoreboardManager($this);
-        
-        // Register listeners
+
+        // Registra listeners
         $this->getServer()->getPluginManager()->registerEvents(new EventListener($this), $this);
-        
-        // Register commands
-        $this->getServer()->getCommandMap()->register("CoreDelta", new SkywarsCommand($this));
-        
+
+        // Registra comandos individuales
+        $commandMap = $this->getServer()->getCommandMap();
+        $commandMap->register("CoreDelta", new \CoreDelta\command\SwCreateCommand($this));
+        $commandMap->register("CoreDelta", new \CoreDelta\command\SwDeleteCommand($this));
+        $commandMap->register("CoreDelta", new \CoreDelta\command\SwJoinCommand($this));
+        $commandMap->register("CoreDelta", new \CoreDelta\command\SwLeaveCommand($this));
+        $commandMap->register("CoreDelta", new \CoreDelta\command\SwStatsCommand($this));
+        $commandMap->register("CoreDelta", new \CoreDelta\command\SwTopCommand($this));
+        $commandMap->register("CoreDelta", new \CoreDelta\command\SwListCommand($this));
+        $commandMap->register("CoreDelta", new \CoreDelta\command\SwTutorialCommand($this));
+        $commandMap->register("CoreDelta", new \CoreDelta\command\SwSetupCommand($this));
+
         $this->getLogger()->info("CoreDelta Skywars enabled successfully!");
     }
     
