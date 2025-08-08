@@ -1,7 +1,7 @@
 name: CoreDelta
 main: CoreDelta\CoreDelta
 api: 5.0.0
-version: 1.0.0
+version: 1.0.2
 author: DevPapo
 description: Skywars plugin for PocketMine-MP API 5
 load: POSTWORLD
