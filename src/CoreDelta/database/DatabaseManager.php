@@ -169,7 +169,7 @@ class DatabaseManager {
             WHERE id = ?"
         );
         $stmt->bind_param(
-            "ssiiisii",
+            "ssiiissi",
             $data["name"],
             $data["world"],
             $data["min_players"],
@@ -195,64 +195,13 @@ class DatabaseManager {
         
         return $arena ?: null;
     }
-    
-    public function deleteArena(int $arenaId): void {
-        $stmt = $this->connection->prepare(
-            "DELETE FROM {$this->tablePrefix}arenas WHERE id = ?"
-        );
-        $stmt->bind_param("i", $arenaId);
-        $stmt->execute();
-        $stmt->close();
-    }
-    
-    public function startGame(int $arenaId): void {
-        $stmt = $this->connection->prepare(
-            "INSERT INTO {$this->tablePrefix}games (arena_id) VALUES (?)"
-        );
-        $stmt->bind_param("i", $arenaId);
-        $stmt->execute();
-        $stmt->close();
-    }
-    
-    public function endGame(int $gameId, string $winner): void {
-        $stmt = $this->connection->prepare(
-            "UPDATE {$this->tablePrefix}games 
-            SET end_time = CURRENT_TIMESTAMP, winner = ?
-            WHERE id = ?"
-        );
-        $stmt->bind_param("si", $winner, $gameId);
-        $stmt->execute();
-        $stmt->close();
-    }
-    
-    public function getOngoingGames(): array {
+
+    public function getTopPlayers(int $limit = 10): array {
         $result = $this->connection->query(
-            "SELECT g.*, a.name as arena_name, a.min_players, a.max_players, a.spawn_points, a.center_chest
-            FROM {$this->tablePrefix}games g
-            JOIN {$this->tablePrefix}arenas a ON g.arena_id = a.id
-            WHERE g.end_time IS NULL"
+            "SELECT * FROM {$this->tablePrefix}players 
+            ORDER BY points DESC, wins DESC 
+            LIMIT $limit"
         );
-        
-        $games = [];
-        while ($row = $result->fetch_assoc()) {
-            $games[] = $row;
-        }
-        
-        return $games;
-    }
-    
-    public function getPlayerRankings(): array {
-        $result = $this->connection->query(
-            "SELECT username, kills, deaths, wins, games_played, points
-            FROM {$this->tablePrefix}players
-            ORDER BY points DESC, wins DESC, kills DESC"
-        );
-        
-        $rankings = [];
-        while ($row = $result->fetch_assoc()) {
-            $rankings[] = $row;
-        }
-        
-        return $rankings;
+        return $result->fetch_all(MYSQLI_ASSOC);
     }
 }

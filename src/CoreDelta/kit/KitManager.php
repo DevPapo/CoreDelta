@@ -5,8 +5,7 @@ declare(strict_types=1);
 namespace CoreDelta\kit;
 
 use CoreDelta\CoreDelta;
-use pocketmine\item\ItemFactory;
-use pocketmine\item\ItemIds;
+use pocketmine\item\VanillaItems;
 use pocketmine\player\Player;
 
 class KitManager {
@@ -24,29 +23,29 @@ class KitManager {
             "default" => [
                 "name" => "Default",
                 "items" => [
-                    ["id" => ItemIds::IRON_SWORD, "count" => 1],
-                    ["id" => ItemIds::BOW, "count" => 1],
-                    ["id" => ItemIds::ARROW, "count" => 16],
-                    ["id" => ItemIds::GOLDEN_APPLE, "count" => 2],
-                    ["id" => ItemIds::WOODEN_PICKAXE, "count" => 1]
+                    VanillaItems::IRON_SWORD(),
+                    VanillaItems::BOW(),
+                    VanillaItems::ARROW()->setCount(16),
+                    VanillaItems::GOLDEN_APPLE()->setCount(2),
+                    VanillaItems::WOODEN_PICKAXE()
                 ]
             ],
             "archer" => [
                 "name" => "Archer",
                 "items" => [
-                    ["id" => ItemIds::STONE_SWORD, "count" => 1],
-                    ["id" => ItemIds::BOW, "count" => 1],
-                    ["id" => ItemIds::ARROW, "count" => 32],
-                    ["id" => ItemIds::GOLDEN_APPLE, "count" => 1]
+                    VanillaItems::STONE_SWORD(),
+                    VanillaItems::BOW(),
+                    VanillaItems::ARROW()->setCount(32),
+                    VanillaItems::GOLDEN_APPLE()
                 ]
             ],
             "warrior" => [
                 "name" => "Warrior",
                 "items" => [
-                    ["id" => ItemIds::IRON_SWORD, "count" => 1],
-                    ["id" => ItemIds::IRON_CHESTPLATE, "count" => 1],
-                    ["id" => ItemIds::IRON_LEGGINGS, "count" => 1],
-                    ["id" => ItemIds::GOLDEN_APPLE, "count" => 3]
+                    VanillaItems::IRON_SWORD(),
+                    VanillaItems::IRON_CHESTPLATE(),
+                    VanillaItems::IRON_LEGGINGS(),
+                    VanillaItems::GOLDEN_APPLE()->setCount(3)
                 ]
             ]
         ];
@@ -62,8 +61,7 @@ class KitManager {
         
         $player->getInventory()->clearAll();
         
-        foreach ($kit["items"] as $itemData) {
-            $item = ItemFactory::getInstance()->get($itemData["id"], 0, $itemData["count"]);
+        foreach ($kit["items"] as $item) {
             $player->getInventory()->addItem($item);
         }
         
