@@ -21,6 +21,9 @@ class DatabaseManager {
     
     private function connect(): void {
         $config = $this->plugin->getConfig()->get("mysql");
+        if (!is_array($config)) {
+            throw new \RuntimeException("No se encontró la configuración 'mysql' en config.yml o está mal formada.");
+        }
         $this->tablePrefix = $config["table-prefix"];
         
         $this->connection = new mysqli(
@@ -131,19 +134,63 @@ class DatabaseManager {
         $stmt->bind_param("s", $username);
         $stmt->execute();
         $result = $stmt->get_result();
-        $data = $result->fetch_assoc();
+        $stats = $result->fetch_assoc();
         $stmt->close();
         
-        return $data;
+        return $stats ?: null;
     }
     
-    public function getTopPlayers(int $limit = 10): array {
-        $result = $this->connection->query(
-            "SELECT * FROM {$this->tablePrefix}players 
-            ORDER BY points DESC, wins DESC 
-            LIMIT $limit"
+    public function createArena(array $data): int {
+        $stmt = $this->connection->prepare(
+            "INSERT INTO {$this->tablePrefix}arenas (name, world, min_players, max_players, spawn_points, center_chest) 
+            VALUES (?, ?, ?, ?, ?, ?)"
         );
+        $stmt->bind_param(
+            "ssiiiss",
+            $data["name"],
+            $data["world"],
+            $data["min_players"],
+            $data["max_players"],
+            json_encode($data["spawn_points"]),
+            $data["center_chest"]
+        );
+        $stmt->execute();
+        $arenaId = $stmt->insert_id;
+        $stmt->close();
         
-        return $result->fetch_all(MYSQLI_ASSOC);
+        return $arenaId;
     }
-}
+    
+    public function updateArena(int $arenaId, array $data): void {
+        $stmt = $this->connection->prepare(
+            "UPDATE {$this->tablePrefix}arenas 
+            SET name = ?, world = ?, min_players = ?, max_players = ?, 
+                spawn_points = ?, center_chest = ?, status = ?
+            WHERE id = ?"
+        );
+        $stmt->bind_param(
+            "ssiiisii",
+            $data["name"],
+            $data["world"],
+            $data["min_players"],
+            $data["max_players"],
+            json_encode($data["spawn_points"]),
+            $data["center_chest"],
+            $data["status"],
+            $arenaId
+        );
+        $stmt->execute();
+        $stmt->close();
+    }
+    
+    public function getArena(int $arenaId): ?array {
+        $stmt = $this->connection->prepare(
+            "SELECT * FROM {$this->tablePrefix}arenas WHERE id = ?"
+        );
+        $stmt->bind_param("i", $arenaId);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $arena = $result->fetch_assoc();
+        $stmt->close();
+        
+        return $arena ?
