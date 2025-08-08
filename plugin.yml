@@ -13,6 +13,51 @@ commands:
     aliases: ['sw']
     permission: coredelta.command.skywars
 
+  swcreate:
+    description: "Crear una nueva arena"
+    usage: "/swcreate <nombre>"
+    permission: coredelta.command.create
+
+  swdelete:
+    description: "Eliminar una arena"
+    usage: "/swdelete <nombre>"
+    permission: coredelta.command.delete
+
+  swjoin:
+    description: "Unirse a una arena"
+    usage: "/swjoin <arena>"
+    permission: coredelta.command.join
+
+  swleave:
+    description: "Salir de la arena"
+    usage: "/swleave"
+    permission: coredelta.command.leave
+
+  swstats:
+    description: "Ver estadísticas"
+    usage: "/swstats [jugador]"
+    permission: coredelta.command.stats
+
+  swtop:
+    description: "Ver top jugadores"
+    usage: "/swtop"
+    permission: coredelta.command.top
+
+  swlist:
+    description: "Listar arenas"
+    usage: "/swlist"
+    permission: coredelta.command.list
+
+  swtutorial:
+    description: "Ver tutorial"
+    usage: "/swtutorial <tipo>"
+    permission: coredelta.command.tutorial
+
+  swsetup:
+    description: "Setup de arena"
+    usage: "/swsetup <arena>"
+    permission: coredelta.command.setup
+
 permissions:
   coredelta.command.skywars:
     default: op

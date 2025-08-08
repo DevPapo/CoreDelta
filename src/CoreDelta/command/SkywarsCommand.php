@@ -16,6 +16,7 @@ class SkywarsCommand extends Command {
     
     public function __construct(CoreDelta $plugin) {
         parent::__construct("skywars", "CoreDelta Skywars commands", "/skywars <subcommand>", ["sw"]);
+        $this->setPermission("coredelta.command.skywars");
         $this->plugin = $plugin;
     }
     
@@ -24,9 +25,9 @@ class SkywarsCommand extends Command {
             $this->sendHelp($sender);
             return true;
         }
-        
+
         $subcommand = strtolower(array_shift($args));
-        
+
         switch ($subcommand) {
             case "create":
                 return $this->handleCreate($sender, $args);
@@ -47,10 +48,9 @@ class SkywarsCommand extends Command {
             case "setup":
                 return $this->handleSetup($sender, $args);
             default:
-                $this->sendHelp($sender);
+                $sender->sendMessage("§cUnknown subcommand. Use /skywars for help.");
+                return true;
         }
-        
-        return true;
     }
     
     private function sendHelp(CommandSender $sender): void {
