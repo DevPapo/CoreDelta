@@ -2,12 +2,12 @@
 
 # MySQL Database Configuration
 mysql:
-  host: "localhost"
+  host: "103.195.103.54"
   port: 3306
-  database: "coredelta"
-  username: "root"
-  password: ""
-  table-prefix: "cd_"
+  database: "s396_delta"
+  username: "u396_OWkQQI7sZj"
+  password: "AUOg^Yng9i3vLH0IJ8xLlBS="
+  table-prefix: "s396_delta"
 
 # Game Settings
 game:
