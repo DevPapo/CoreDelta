@@ -42,6 +42,10 @@ class SkywarsCommand extends Command {
                 return $this->handleTop($sender);
             case "list":
                 return $this->handleList($sender);
+            case "tutorial":
+                return $this->handleTutorial($sender, $args);
+            case "setup":
+                return $this->handleSetup($sender, $args);
             default:
                 $this->sendHelp($sender);
         }
@@ -58,6 +62,8 @@ class SkywarsCommand extends Command {
         $sender->sendMessage(TextFormat::GREEN . "/skywars stats [player] - View player stats");
         $sender->sendMessage(TextFormat::GREEN . "/skywars top - View top players");
         $sender->sendMessage(TextFormat::GREEN . "/skywars list - List available arenas");
+        $sender->sendMessage(TextFormat::GREEN . "/skywars tutorial <type> - Show tutorial");
+        $sender->sendMessage(TextFormat::GREEN . "/skywars setup <arena> - Start arena setup wizard");
     }
     
     private function handleCreate(CommandSender $sender, array $args): bool {
