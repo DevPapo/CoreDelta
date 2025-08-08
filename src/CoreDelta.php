@@ -34,6 +34,14 @@ class CoreDelta extends PluginBase {
     
     public function onEnable(): void {
         $this->saveDefaultConfig();
+
+        // Validar configuración MySQL antes de inicializar DatabaseManager
+        $mysqlConfig = $this->getConfig()->get("mysql");
+        if (!is_array($mysqlConfig)) {
+            $this->getLogger()->error("No se encontró la configuración 'mysql' en config.yml o está mal formada. El plugin no se habilitará.");
+            $this->getServer()->getPluginManager()->disablePlugin($this);
+            return;
+        }
         
         // Initialize managers
         $this->databaseManager = new DatabaseManager($this);
@@ -52,7 +60,9 @@ class CoreDelta extends PluginBase {
     }
     
     public function onDisable(): void {
-        $this->databaseManager->close();
+        if (isset($this->databaseManager)) {
+            $this->databaseManager->close();
+        }
         $this->getLogger()->info("CoreDelta Skywars disabled!");
     }
     

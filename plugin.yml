@@ -10,23 +10,10 @@ commands:
   skywars:
     description: "Main Skywars commands"
     usage: "/skywars <subcommand>"
-    permission: coredelta.command.skywars
-  sw:
-    description: "Alias for /skywars"
-    usage: "/sw <subcommand>"
+    aliases: ['sw']
     permission: coredelta.command.skywars
 
 permissions:
-  coredelta.*:
-    default: op
-    children:
-      coredelta.command.*:
-        default: op
-      coredelta.admin.*:
-        default: op
-      coredelta.player.*:
-        default: true
-
   coredelta.command.skywars:
     default: op
   coredelta.command.create:
